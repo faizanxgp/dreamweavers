@@ -1,0 +1,120 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database - Custom Port 5433
+  postgres:
+    image: postgres:15-alpine
+    container_name: dream-interpreter-db
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-dream_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-dream_password}
+      POSTGRES_DB: ${POSTGRES_DB:-dream_interpreter}
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./db/schemas:/docker-entrypoint-initdb.d
+    networks:
+      - dream-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-dream_user}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis Cache - Custom Port 6380
+  redis:
+    image: redis:7-alpine
+    container_name: dream-interpreter-redis
+    ports:
+      - "6380:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - dream-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    command: redis-server --appendonly yes
+
+  # Backend API - Custom Port 8001
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: dream-interpreter-backend
+    environment:
+      - ENVIRONMENT=${ENVIRONMENT:-development}
+      - DEBUG=${DEBUG:-True}
+      - DATABASE_URL=postgresql+asyncpg://${POSTGRES_USER:-dream_user}:${POSTGRES_PASSWORD:-dream_password}@postgres:5432/${POSTGRES_DB:-dream_interpreter}
+      - REDIS_URL=redis://redis:6379/0
+      - OLLAMA_HOST=${OLLAMA_HOST:-http://host.docker.internal:11434}
+      - SECRET_KEY=${SECRET_KEY:-your-secret-key-change-in-production}
+    ports:
+      - "8001:8001"
+    volumes:
+      - ./backend:/app
+      - backend_uploads:/app/uploads
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - dream-network
+    restart: unless-stopped
+
+  # Frontend - Custom Port 3001
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: dream-interpreter-frontend
+    environment:
+      - VITE_API_URL=${VITE_API_URL:-http://localhost:8001/api/v1}
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+    networks:
+      - dream-network
+    restart: unless-stopped
+
+  # PgAdmin (Optional - for database management) - Custom Port 5051
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: dream-interpreter-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL:-admin@dreaminterpreter.com}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD:-admin}
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    ports:
+      - "5051:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      - postgres
+    networks:
+      - dream-network
+    profiles:
+      - tools
+    restart: unless-stopped
+
+networks:
+  dream-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+  backend_uploads:
+    driver: local
+  pgadmin_data:
+    driver: local
