@@ -38,12 +38,28 @@ class User(BaseModel):
     profile_visibility = Column(Boolean, default=True)
     allow_friend_requests = Column(Boolean, default=True)
 
+    # Social counters (denormalized for performance)
+    followers_count = Column(Integer, default=0)
+    following_count = Column(Integer, default=0)
+
     # Relationships
     dreams = relationship("Dream", back_populates="user", cascade="all, delete-orphan")
     interpretations = relationship("Interpretation", back_populates="user", cascade="all, delete-orphan")
     posts = relationship("SocialPost", back_populates="user", cascade="all, delete-orphan")
     comments = relationship("Comment", back_populates="user", cascade="all, delete-orphan")
     likes = relationship("Like", back_populates="user", cascade="all, delete-orphan")
+    shares = relationship("Share", back_populates="user", cascade="all, delete-orphan")
+
+    # Follower relationships
+    followers = relationship("Follower", foreign_keys="Follower.following_id", back_populates="following", cascade="all, delete-orphan")
+    following = relationship("Follower", foreign_keys="Follower.follower_id", back_populates="follower", cascade="all, delete-orphan")
+
+    # Notification relationships
+    notifications = relationship("Notification", foreign_keys="Notification.user_id", back_populates="user", cascade="all, delete-orphan")
+
+    # Mention relationships
+    mentions_received = relationship("Mention", foreign_keys="Mention.user_id", back_populates="user", cascade="all, delete-orphan")
+    mentions_made = relationship("Mention", foreign_keys="Mention.mentioned_by", back_populates="mentioner", cascade="all, delete-orphan")
 
     def __repr__(self):
         return f"<User {self.username}>"
