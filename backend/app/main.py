@@ -50,8 +50,21 @@ async def startup_event():
 
     # Initialize database connection pool
     # Initialize Redis connection
-    # Initialize Ollama connection check
-    logger.info("All services initialized successfully")
+
+    # Check Ollama connection
+    from app.services.ollama_service import ollama_service
+
+    logger.info(f"Checking Ollama service at {settings.OLLAMA_HOST}...")
+    ollama_healthy = await ollama_service.check_health()
+
+    if ollama_healthy:
+        logger.info(f"✓ Ollama service is running (model: {settings.OLLAMA_MODEL})")
+    else:
+        logger.warning(f"⚠ Ollama service is not available at {settings.OLLAMA_HOST}")
+        logger.warning("Dream interpretation features will not work until Ollama is running")
+        logger.warning("To start Ollama: ollama serve")
+
+    logger.info("Application startup complete")
 
 
 @app.on_event("shutdown")
