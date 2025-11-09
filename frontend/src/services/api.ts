@@ -151,14 +151,41 @@ export const istkharaAPI = {
 }
 
 export const azkarAPI = {
+  // Get all Azkar with optional category filter
+  getAllAzkar: (category?: string) => {
+    const params = category ? { category } : {}
+    return api.get('/azkar', { params })
+  },
+
   // Get night Azkar
   getNightAzkar: () => api.get('/azkar/night'),
 
   // Get sleep Duas
   getSleepDuas: () => api.get('/azkar/sleep'),
+
+  // Get morning Azkar
+  getMorningAzkar: () => api.get('/azkar/morning'),
+
+  // Get evening Azkar
+  getEveningAzkar: () => api.get('/azkar/evening'),
+
+  // Get specific Azkar by ID
+  getAzkarById: (id: number) => api.get(`/azkar/${id}`),
 }
 
 export const sleepAPI = {
+  // Get sleep guidance
+  getGuidance: () => api.get('/sleep/guidance'),
+
+  // Get Islamic sleep times
+  getIslamicTimes: () => api.get('/sleep/islamic-times'),
+
+  // Get sleep tips
+  getTips: () => api.get('/sleep/tips'),
+
+  // Get bedtime Azkar checklist
+  getAzkarChecklist: () => api.get('/sleep/azkar-checklist'),
+
   // Log sleep data
   logSleep: (data: any) => api.post('/sleep/log', data),
 
