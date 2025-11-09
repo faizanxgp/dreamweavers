@@ -163,7 +163,13 @@ npm run dev
 # Create PostgreSQL database
 createdb dream_interpreter
 
-# Run migrations
+# Run initial schema
+psql -U postgres -d dream_interpreter < db/schemas/001_initial_schema.sql
+
+# Run social features schema
+psql -U postgres -d dream_interpreter < db/schemas/002_social_features.sql
+
+# Or use Alembic migrations (if configured)
 cd backend
 alembic upgrade head
 ```
@@ -212,6 +218,14 @@ git push origin feature/your-feature-name
 ## API Documentation
 
 Once the backend is running, visit `http://localhost:8000/docs` for interactive API documentation (Swagger UI).
+
+### Social Features API
+Comprehensive documentation for social features is available at [docs/SOCIAL_FEATURES_API.md](docs/SOCIAL_FEATURES_API.md), including:
+- Posts, comments, likes
+- Follow/unfollow functionality
+- Shares and notifications
+- User search and statistics
+- Complete endpoint specifications with examples
 
 ## Design Philosophy
 
@@ -286,7 +300,15 @@ For questions, issues, or contributions, please open an issue on GitHub.
 - [ ] Basic UI with Islamic theme
 
 ### Phase 2
-- [ ] Social features (sharing, likes, comments)
+- [x] **Social features (sharing, likes, comments)** ✅
+  - [x] Social posts from dreams
+  - [x] Like/unlike posts
+  - [x] Comment system with threading
+  - [x] Follow/unfollow users
+  - [x] Share/repost functionality
+  - [x] Real-time notifications
+  - [x] User search and discovery
+  - [x] Social statistics and engagement metrics
 - [ ] Human Imam consultation system
 - [ ] Istikhara interpretation
 - [ ] Sleep quality tracking
