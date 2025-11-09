@@ -213,6 +213,28 @@ git push origin feature/your-feature-name
 
 Once the backend is running, visit `http://localhost:8000/docs` for interactive API documentation (Swagger UI).
 
+### Ollama LLM Integration
+
+The application now includes **complete Ollama integration** for AI-powered dream interpretation:
+
+- **Regular Dream Interpretation**: `POST /api/v1/interpretations/interpret`
+- **Istikhara Dream Interpretation**: `POST /api/v1/interpretations/interpret/istikhara`
+- **Health Check**: `GET /api/v1/interpretations/health`
+
+For detailed integration documentation, setup instructions, and examples, see:
+- [Ollama Integration Guide](backend/OLLAMA_INTEGRATION.md)
+
+**Quick Test:**
+```bash
+# Ensure Ollama is running
+ollama serve
+
+# Test the interpretation endpoint
+curl -X POST "http://localhost:8000/api/v1/interpretations/interpret" \
+  -H "Content-Type: application/json" \
+  -d '{"dream_text": "I saw a green bird flying towards the sun"}'
+```
+
 ## Design Philosophy
 
 ### Islamic Aesthetic
