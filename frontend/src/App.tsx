@@ -9,7 +9,7 @@ import { Toaster } from 'react-hot-toast'
 // import Interpretation from '@pages/Interpretation'
 // import Social from '@pages/Social'
 // import Profile from '@pages/Profile'
-// import IstkharaPage from '@pages/IstkharaPage'
+import IstkharaPage from './pages/IstkharaPage'
 // import AzkarPage from '@pages/AzkarPage'
 // import SleepPage from '@pages/SleepPage'
 
@@ -50,7 +50,7 @@ function App() {
               {/* <Route path="/interpretation/:id" element={<Interpretation />} /> */}
               {/* <Route path="/social" element={<Social />} /> */}
               {/* <Route path="/profile" element={<Profile />} /> */}
-              {/* <Route path="/istikhara" element={<IstkharaPage />} /> */}
+              <Route path="/istikhara" element={<IstkharaPage />} />
               {/* <Route path="/azkar" element={<AzkarPage />} /> */}
               {/* <Route path="/sleep" element={<SleepPage />} /> */}
             </Routes>

@@ -3,8 +3,8 @@ API Router - Main router that includes all endpoint routers
 """
 from fastapi import APIRouter
 
-# Import routers (will be created)
-# from app.api.v1.endpoints import auth, dreams, interpretations, social, profile, imam, istikhara, azkar, sleep
+# Import routers
+from app.api.v1.endpoints import istikhara
 
 api_router = APIRouter()
 
@@ -15,7 +15,7 @@ api_router = APIRouter()
 # api_router.include_router(social.router, prefix="/social", tags=["Social"])
 # api_router.include_router(profile.router, prefix="/profile", tags=["Profile"])
 # api_router.include_router(imam.router, prefix="/imam", tags=["Imam Consultation"])
-# api_router.include_router(istikhara.router, prefix="/istikhara", tags=["Istikhara"])
+api_router.include_router(istikhara.router, prefix="/istikhara", tags=["Istikhara"])
 # api_router.include_router(azkar.router, prefix="/azkar", tags=["Azkar"])
 # api_router.include_router(sleep.router, prefix="/sleep", tags=["Sleep Tracking"])
 
