@@ -13,10 +13,19 @@ Dream Interpreter is a comprehensive Islamic dream interpretation platform that 
 - **Istikhara Dream Interpretation**: Specialized interpretation for Istikhara prayers
 - **Social Community**: Share dreams, like, comment, and connect with other dreamers
 - **Sleep Quality Tracking**: Monitor and improve sleep patterns
-- **Islamic Sleep Guidance**:
-  - Night Azkar (remembrance and prayers)
-  - Sleep etiquette according to Sunnah
-  - Duas for peaceful sleep
+- **✅ Azkar (Islamic Supplications)**: *(Implemented)*
+  - 10+ authentic supplications from Quran and Hadith
+  - Beautiful Arabic typography with RTL support
+  - Transliteration and English translations
+  - Category-based organization (Night, Sleep, Morning, Evening)
+  - Authentic references (Bukhari, Muslim, Abu Dawud, etc.)
+- **✅ Islamic Sleep Guidance**: *(Implemented)*
+  - Comprehensive Islamic sleep recommendations
+  - Recommended sleep/wake times based on Sunnah
+  - Interactive bedtime Azkar checklist with progress tracking
+  - Sleep tips from Islamic tradition
+  - Information about Tahajjud (night prayer)
+  - Proper sleeping position according to Hadith
   - Islamic dream symbolism database
 
 ## Technology Stack
@@ -79,6 +88,8 @@ Dream Interpreter/
 ├── ollama/                # Ollama LLM configuration (empty - using local)
 │
 ├── docs/                  # Project documentation
+│   ├── AZKAR_AND_SLEEP_GUIDANCE.md  # Feature documentation
+│   ├── API_REFERENCE.md             # Complete API reference
 │   ├── architecture/      # Architecture diagrams & docs
 │   ├── api/              # API documentation
 │   ├── development-journey/ # Development logs
@@ -213,6 +224,24 @@ git push origin feature/your-feature-name
 
 Once the backend is running, visit `http://localhost:8000/docs` for interactive API documentation (Swagger UI).
 
+### Implemented Endpoints
+
+**Azkar Endpoints:**
+- `GET /api/v1/azkar` - List all Azkar with optional filtering
+- `GET /api/v1/azkar/night` - Get night supplications
+- `GET /api/v1/azkar/sleep` - Get sleep Duas
+- `GET /api/v1/azkar/morning` - Get morning Azkar
+- `GET /api/v1/azkar/evening` - Get evening Azkar
+- `GET /api/v1/azkar/{id}` - Get specific Azkar by ID
+
+**Sleep Guidance Endpoints:**
+- `GET /api/v1/sleep/guidance` - Get comprehensive sleep guidance
+- `GET /api/v1/sleep/islamic-times` - Get Islamic sleep/wake times
+- `GET /api/v1/sleep/tips` - Get sleep tips from Sunnah
+- `GET /api/v1/sleep/azkar-checklist` - Get bedtime Azkar checklist
+
+For detailed API documentation, see [docs/API_REFERENCE.md](./docs/API_REFERENCE.md)
+
 ## Design Philosophy
 
 ### Islamic Aesthetic
@@ -278,18 +307,22 @@ For questions, issues, or contributions, please open an issue on GitHub.
 
 ## Roadmap
 
-### Phase 1 (MVP)
+### Phase 1: Foundation ✅
+- [x] Project setup with FastAPI + React
+- [x] Database schema design
+- [x] **Azkar system implementation**
+- [x] **Islamic sleep guidance**
+- [x] Basic UI with Islamic theme
 - [ ] User authentication and authorization
+
+### Phase 2: Core Features (In Progress)
 - [ ] Basic dream journal functionality
 - [ ] AI dream interpretation via Ollama
 - [ ] Islamic dream symbolism database
-- [ ] Basic UI with Islamic theme
-
-### Phase 2
+- [ ] Istikhara interpretation
+- [ ] Sleep quality tracking integration
 - [ ] Social features (sharing, likes, comments)
 - [ ] Human Imam consultation system
-- [ ] Istikhara interpretation
-- [ ] Sleep quality tracking
 
 ### Phase 3
 - [ ] Mobile app (React Native)
