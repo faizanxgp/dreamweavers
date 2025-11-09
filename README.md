@@ -6,11 +6,29 @@ Dream Interpreter is a comprehensive Islamic dream interpretation platform that 
 
 ## Features
 
-### Core Features
+### ✅ Implemented Features
+
+#### **Istikhara Dream Interpretation**
+Submit dreams seen after performing Salat al-Istikhara and receive AI-powered interpretations based on classical Islamic traditions. [📖 Read Full Documentation](./docs/ISTIKHARA_FEATURE.md)
+
+**Key Features:**
+- Comprehensive input form with emotions, symbols, and colors
+- AI-powered analysis using Ollama LLM with specialized Islamic prompting
+- Spiritual guidance with balanced interpretation
+- Privacy controls (private, friends, public)
+- Beautiful Islamic-themed UI
+
+**How to Use:**
+1. Navigate to `/istikhara` in the application
+2. Fill out the dream form with decision context
+3. Submit and receive instant AI interpretation
+4. View interpretation with Islamic guidance and reminders
+
+### 🚧 Planned Features
+
 - **Dream Journal**: Personal, secure dream journaling with rich text support
-- **AI Dream Interpretation**: Instant dream interpretation using fine-tuned LLM (Ollama)
+- **AI Dream Interpretation**: Instant dream interpretation for all dream types using fine-tuned LLM (Ollama)
 - **Human Imam Consultation**: Request interpretation from certified Islamic scholars
-- **Istikhara Dream Interpretation**: Specialized interpretation for Istikhara prayers
 - **Social Community**: Share dreams, like, comment, and connect with other dreamers
 - **Sleep Quality Tracking**: Monitor and improve sleep patterns
 - **Islamic Sleep Guidance**:
@@ -80,9 +98,9 @@ Dream Interpreter/
 │
 ├── docs/                  # Project documentation
 │   ├── architecture/      # Architecture diagrams & docs
-│   ├── api/              # API documentation
 │   ├── development-journey/ # Development logs
-│   └── guides/           # Setup and user guides
+│   ├── guides/           # Setup and user guides
+│   └── ISTIKHARA_FEATURE.md  # Istikhara feature documentation
 │
 ├── agents/               # Agent configurations
 │   ├── ci-cd-agent.md
@@ -283,13 +301,14 @@ For questions, issues, or contributions, please open an issue on GitHub.
 - [ ] Basic dream journal functionality
 - [ ] AI dream interpretation via Ollama
 - [ ] Islamic dream symbolism database
-- [ ] Basic UI with Islamic theme
+- [x] Basic UI with Islamic theme
+- [x] **Istikhara Dream Interpretation** - ✅ Completed
 
 ### Phase 2
 - [ ] Social features (sharing, likes, comments)
 - [ ] Human Imam consultation system
-- [ ] Istikhara interpretation
 - [ ] Sleep quality tracking
+- [ ] Enhanced dream journal with history
 
 ### Phase 3
 - [ ] Mobile app (React Native)
